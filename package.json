@@ -20,9 +20,13 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
+    "angular-chartjs": "0.0.5",
+    "angular2-chartjs": "^0.2.0",
+    "chart.js": "^2.5.0",
     "core-js": "^2.4.1",
     "moment": "^2.18.1",
     "mysql": "^2.13.0",
+    "ng2-charts": "^1.5.0",
     "node-dht-sensor": "0.0.32",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"

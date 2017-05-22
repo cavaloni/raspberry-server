@@ -1,0 +1,17 @@
+<h2>[colors] being undefined prevents all of [datasets]'s colors</h2>
+    <div *ngIf="loaded" style="display: block">
+      <canvas baseChart
+        [labels]="tempLabels"
+        [data]="tempData"
+        [colors]="colorsUndefined"
+        [chartType]="type"
+        ></canvas>
+    </div>
+    <div *ngIf="loaded" style="display: block">
+      <canvas baseChart
+        [labels]="humLabels"
+        [data]="humData"
+        [colors]="colorsUndefined"
+        [chartType]="type"
+        ></canvas>
+    </div>
