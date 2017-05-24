@@ -6,7 +6,8 @@ import mock from './mock_data';
 @Component({
   selector: 'chart-thing',
   templateUrl: './chart.component.html',
-  providers: [GetStats]
+  providers: [GetStats],
+  styleUrls: ['./chart.component.css'],
 })
 export class ChartComponent {
   name: string;
@@ -17,6 +18,7 @@ export class ChartComponent {
   loaded: boolean;
   received: object;
   type: string = 'line';
+  private mock: boolean = false;
 
   private parseData(data) {
     let received = data.reduce((acc, cur) => {
@@ -48,7 +50,11 @@ export class ChartComponent {
 
   constructor(private _getStats: GetStats) {
     this._getStats.getMyStats()
-      .subscribe(res => this.parseData(res.results))
-    // this.parseMock(mock)
+      .subscribe(res => {
+        this.parseData(res.results)
+      }, err => {
+        this.parseMock(mock)
+        this.mock = true;
+      })
   }
 }

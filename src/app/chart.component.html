@@ -1,4 +1,5 @@
-<h2>[colors] being undefined prevents all of [datasets]'s colors</h2>
+<h2 *ngIf="mock; else elseBlock">Server is down. Using Mock Data.</h2>
+<ng-template #elseBlock><h2>Data updated every five minutes</h2></ng-template>
     <div *ngIf="loaded" style="display: block">
       <canvas baseChart
         [labels]="tempLabels"
