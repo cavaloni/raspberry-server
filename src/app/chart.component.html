@@ -1,3 +1,8 @@
+<select [(ngModel)]="selectedValue" (ngModelChange)="onChange($event)">
+  <option value="house">My house</option>
+  <option value="Weather">Weather</option>
+</select>
+
 <h2 *ngIf="mock; else elseBlock">Server is down. Using Mock Data.</h2>
 <ng-template #elseBlock><h2>Data updated every five minutes</h2></ng-template>
     <div *ngIf="loaded" style="display: block">

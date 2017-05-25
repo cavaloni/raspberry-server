@@ -10,6 +10,7 @@ import mock from './mock_data';
   styleUrls: ['./chart.component.css'],
 })
 export class ChartComponent {
+  public selectedValue: string = 'house';
   name: string;
   tempLabels: string[];
   tempData: number[];
@@ -22,12 +23,10 @@ export class ChartComponent {
 
   private parseData(data) {
     let received = data.reduce((acc, cur) => {
-            console.log(acc)
-            console.log(cur)
             acc.dates.push(cur.date)
             acc.hoursMins.push(cur.hour_min)
             acc.humidity.push(cur.humidity)
-            acc.temperature.push(cur.temperature)
+            acc.temperature.push(cur.temperature * 1.8 + 32)
             return acc
         }, {
             dates: [],
@@ -48,13 +47,29 @@ export class ChartComponent {
     this.loaded = true;
   }
 
+  onChange(e) {
+    this.selectedValue = e;
+    this.getData();
+  }
+
+  getData() {
+    if (this.selectedValue === 'house') {
+      this._getStats.getMyStats()
+        .subscribe(res => {
+          this.parseData(res.results)
+        }, err => {
+          this.parseMock(mock)
+          this.mock = true;
+        })
+    } else {
+      this._getStats.getWeather()
+        .subscribe(res => {
+          console.log(res)
+        })
+    }
+  }
+
   constructor(private _getStats: GetStats) {
-    this._getStats.getMyStats()
-      .subscribe(res => {
-        this.parseData(res.results)
-      }, err => {
-        this.parseMock(mock)
-        this.mock = true;
-      })
+    this.getData()
   }
 }
