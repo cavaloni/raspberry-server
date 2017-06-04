@@ -21,6 +21,32 @@ export class ChartComponent {
   type: string = 'line';
   private mock: boolean = false;
 
+  outsideTemp: number;
+  outsideHum: number;
+  difference: number;
+  space: string;
+
+  options: object = {
+    legend: {
+      display: false,
+    }
+  }
+  tempOptions: object = {
+    ...this.options,
+    title: {
+      display: true,
+      text: 'Temperature'
+    }
+  }
+
+  humOptions: object = {
+    ...this.options,
+    title: {
+      display: true,
+      text: 'Humidity'
+    }
+  }
+
   private parseData(data) {
     let received = data.reduce((acc, cur) => {
             acc.dates.push(cur.date)
@@ -53,20 +79,39 @@ export class ChartComponent {
   }
 
   getData() {
-    if (this.selectedValue === 'house') {
-      this._getStats.getMyStats()
-        .subscribe(res => {
-          this.parseData(res.results)
-        }, err => {
-          this.parseMock(mock)
-          this.mock = true;
-        })
-    } else {
-      this._getStats.getWeather()
-        .subscribe(res => {
-          console.log(res)
-        })
-    }
+    this._getStats.getMyStats()
+      .subscribe(res => {
+        this.parseData(res.results)
+
+        let bigger;
+        let smaller;
+        let spaceNameBig;
+        console.log(this.tempData)
+        if (this.outsideTemp < this.tempData[this.tempData.length - 1]) { 
+          bigger = this.tempData[this.tempData.length - 1]
+          smaller = this.outsideTemp;
+          spaceNameBig = 'inside';
+        } else {
+          bigger = this.outsideTemp
+          smaller = this.tempData[this.tempData.length - 1]
+          spaceNameBig = 'outside';
+        }
+
+        console.log(bigger, smaller)
+
+        this.difference = Number((bigger - smaller).toFixed(1));
+        this.space = spaceNameBig;
+      }, err => {
+        this.parseMock(mock)
+        this.mock = true;
+      })
+    this._getStats.getWeather()
+      .subscribe(res => {
+        let converted = Number((res.main.temp * (9/5) - 459.67).toFixed(2));
+        this.outsideTemp = converted;
+        this.outsideHum = res.main.humidity;
+        
+      })
   }
 
   constructor(private _getStats: GetStats) {

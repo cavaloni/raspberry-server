@@ -3,18 +3,25 @@
   <option value="Weather">Weather</option>
 </select>
 
+<div class="temp-comp-box">
+  <h4>Temperature outside right now: {{ outsideTemp }}</h4>
+  <h4>Humidity outside right now: {{ outsideHum }}</h4>
+  <h4>It is {{ difference }} degrees hotter {{ space }} right now.</h4>
+</div>
 <h2 *ngIf="mock; else elseBlock">Server is down. Using Mock Data.</h2>
 <ng-template #elseBlock><h2>Data updated every five minutes</h2></ng-template>
-    <div *ngIf="loaded" style="display: block">
+    <div *ngIf="loaded" style="display: block" class="chart">
       <canvas baseChart
+        [options]="tempOptions"
         [labels]="tempLabels"
         [data]="tempData"
         [colors]="colorsUndefined"
         [chartType]="type"
         ></canvas>
     </div>
-    <div *ngIf="loaded" style="display: block">
+    <div *ngIf="loaded" style="display: block" class="chart">
       <canvas baseChart
+        [options]="humOptions"
         [labels]="humLabels"
         [data]="humData"
         [colors]="colorsUndefined"

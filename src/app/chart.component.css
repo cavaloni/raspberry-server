@@ -1,3 +1,17 @@
 h2 {
     text-align: center;
 }
+
+.chart {
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.temp-comp-box {
+    width: 25%;
+    border: 1px solid black;
+    height: 100px;
+    background: rgba(10, 10, 10, .2);
+    margin-top: 20px;
+}
